@@ -112,7 +112,7 @@ const removeAll = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const data = await Podcast.deleteMany();
+    const data = await Grades.deleteMany();
 
     if (!data) {
       res.send(`Grades nao encontrado`);
