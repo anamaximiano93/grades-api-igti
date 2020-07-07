@@ -13,10 +13,10 @@ import { db } from "./models/index.js";
       useUnifiedTopology: true,
     });
     logger.info("Conectado ao banco de dados");
-    console.log("Conectado ao banco de dados");
+    // console.log("Conectado ao banco de dados");
   } catch (error) {
     logger.error(`Erro ao conectar no banco de dados! ${error}`);
-    console.log(`Erro ao conectar no banco de dados! ${error}`);
+    // console.log(`Erro ao conectar no banco de dados! ${error}`);
 
     process.exit();
   }
@@ -42,5 +42,5 @@ app.get("/", (req, res) => {
 
 app.listen(process.env.PORT || 8081, () => {
   logger.info(`Servidor em execucao na porta ${process.env.PORT}`);
-  console.log("deu certo");
+  //console.log("deu certo");
 });
