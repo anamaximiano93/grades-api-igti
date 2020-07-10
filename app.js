@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import { gradeRouter } from "./routes/gradeRouter.js";
-//import { logger } from "./config/logger.js";
+import { logger } from "./config/logger.js";
 import { db } from "./models/index.js";
 
 (async () => {
@@ -12,10 +12,10 @@ import { db } from "./models/index.js";
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    // logger.info("Conectado ao banco de dados");
+    logger.info("Conectado ao banco de dados");
     // console.log("Conectado ao banco de dados");
   } catch (error) {
-    // logger.error(`Erro ao conectar no banco de dados! ${error}`);
+    logger.error(`Erro ao conectar no banco de dados! ${error}`);
     // console.log(`Erro ao conectar no banco de dados! ${error}`);
 
     process.exit();
@@ -41,6 +41,6 @@ app.get("/", (req, res) => {
 });
 
 app.listen(process.env.PORT || 8081, () => {
-  //logger.info(`Servidor em execucao na porta ${process.env.PORT}`);
+  logger.info(`Servidor em execucao na porta ${process.env.PORT}`);
   //console.log("deu certo");
 });

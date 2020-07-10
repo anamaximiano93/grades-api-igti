@@ -12,7 +12,7 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
 
 const logger = createLogger({
   transports: [
-    new transports.Console(),
+    // new transports.Console(),
     new transports.MongoDB({
       /*  db: process.env.MONGOLOGDB,
       host: process.env.MONGOLOGHOST,
