@@ -1,9 +1,11 @@
-import { db } from "../models/index.js";
-import { logger } from "../config/logger.js";
+import { db } from "../models/index";
+import { logger } from "../config/logger";
 
-const Grades = db.grade;
+import { Request, Response } from "express";
 
-const create = async (req, res) => {
+const Grades = db.gradesModel;
+
+const create = async (req: Request, res: Response) => {
   try {
     const { name, subject, type, value } = req.body;
 
@@ -13,10 +15,10 @@ const create = async (req, res) => {
       type,
       value,
     });
-    const data = await grade.save(grade);
+    const data = await grade.save();
 
-    res.send(data);
     logger.info(`POST /grade - ${JSON.stringify(data)}`);
+    return res.status(201).send(data);
   } catch (error) {
     res
       .status(500)
@@ -25,19 +27,18 @@ const create = async (req, res) => {
   }
 };
 
-const findAll = async (req, res) => {
+const findAll = async (req: Request, res: Response) => {
   const name = req.query.name;
+  const regexp = new RegExp(String(name));
 
   //condicao para o filtro no findAll
-  var condition = name
-    ? { name: { $regex: new RegExp(name), $options: "i" } }
-    : {};
+  var condition = name ? { name: { $regex: regexp, $options: "i" } } : {};
 
   try {
     const data = await Grades.find(condition);
 
-    res.send(data);
     logger.info(`GET /grade`);
+    return res.status(200).send({ count: data.length, data });
   } catch (error) {
     res
       .status(500)
@@ -46,60 +47,52 @@ const findAll = async (req, res) => {
   }
 };
 
-const findOne = async (req, res) => {
+const findOne = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   try {
     const data = await Grades.findById({ _id: id });
-    res.send(data);
 
     logger.info(`GET /grade - ${id}`);
+    return res.status(200).send(data);
   } catch (error) {
     res.status(500).send({ message: "Erro ao buscar o Grade id: " + id });
     logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
   }
 };
 
-const update = async (req, res) => {
-  if (!req.body) {
+const update = async (req: Request, res: Response) => {
+  const body = req.body;
+  if (Object.keys(body).length === 0) {
     return res.status(400).send({
       message: "Dados para atualizacao vazio",
     });
   }
-
   const id = req.params.id;
 
   try {
-    const data = await Grades.findByIdAndUpdate({ _id: id }, req.body);
+    const data = await Grades.findByIdAndUpdate({ _id: id }, body, {
+      new: true,
+    });
 
-    if (!data) {
-      res.send(`Grade id ${id} nao encontrado`);
-    } else {
-      res.send("Grade atualizado com sucesso");
-    }
+    logger.info(`PUT /grade - ${id} - ${JSON.stringify(body)}`);
+    return res.status(200).send(data);
 
     //res.send({ message: "Grade atualizado com sucesso" });
-
-    logger.info(`PUT /grade - ${id} - ${JSON.stringify(req.body)}`);
   } catch (error) {
     res.status(500).send({ message: "Erro ao atualizar a Grade id: " + id });
     logger.error(`PUT /grade - ${JSON.stringify(error.message)}`);
   }
 };
 
-const remove = async (req, res) => {
+const remove = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   try {
     const data = await Grades.findByIdAndRemove({ _id: id });
 
-    if (!data) {
-      res.send(`Grade id ${id} nao encontrado`);
-    } else {
-      res.send("Grade excluido com sucesso");
-    }
-
     logger.info(`DELETE /grade - ${id}`);
+    return res.status(200).send(data);
   } catch (error) {
     res
       .status(500)
@@ -108,19 +101,13 @@ const remove = async (req, res) => {
   }
 };
 
-const removeAll = async (req, res) => {
+const removeAll = async (req: Request, res: Response) => {
   //const id = req.params.id;
 
   try {
-    const data = await Grades.deleteMany();
-
-    if (!data) {
-      res.send(`Grades nao encontrado`);
-    } else {
-      res.send("Grades excluidas com sucesso");
-    }
-
+    await Grades.deleteMany();
     logger.info(`DELETE /grade`);
+    return res.status(200).send("Grades excluidas com sucesso");
   } catch (error) {
     res.status(500).send({ message: "Erro ao excluir todos as Grades" });
     logger.error(`DELETE /grade - ${JSON.stringify(error.message)}`);
