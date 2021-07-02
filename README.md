@@ -26,7 +26,7 @@
 
 <br>
 
-### Refatorado com TypeScript e adicionado testes de integração com Jest, documentado com o swaggerUI para conhecimento das possiveis requisições.
+### Refatoração com TypeScript e adicionado testes de integração com Jest, documentado com o swaggerUI para conhecimento das possiveis requisições.
 
 <br>
 
@@ -40,7 +40,7 @@
 
 ## 🚀 Como executar o projeto
 
-### 🎲 Clonando o Projeto e Instalando as Dependências:
+### 🎲 Clonando o projeto, instalando as dependências e executando:
 
 ```bash
 # Clone este repositório
@@ -53,13 +53,8 @@ $ cd grades-api-igti
 # npm ou yarn + install
 $ yarn install
 
-```
-
-### 🎲 Executando o Projeto:
-
-```bash
-# Executando Back-End do projeto (raiz da pasta)
-# npm start ou yarn start
+# executando o projeto
+# npm ou yarn + install
 $ yarn start
 
 ```
@@ -72,22 +67,22 @@ $ yarn start
 
 - [Express](https://expressjs.com/pt-br/)
 
-- [Mongoose](https://expressjs.com/pt-br/)
+- [Mongoose](https://mongoosejs.com/docs/guide.html)
 
 - [WinstonJs](https://github.com/winstonjs/winston)
 
 - [Axios](https://github.com/axios/axios)
 
-- [TypeScript](https://expressjs.com/pt-br/)
+- [TypeScript](https://www.typescriptlang.org/docs/)
 
-- [Jest](https://expressjs.com/pt-br/)
+- [Jest](https://jestjs.io/pt-BR/docs/getting-started)
 
 - [Swagger-ui-express](https://www.npmjs.com/package/swagger-ui-express)
 
 <br>
 
 <div align="center">
-<a href="http://random-movies-app.herokuapp.com/api/api-docs/" target="_blank">
+<a href="https://api-grade-igti.herokuapp.com/api-docs/" target="_blank">
 
 <img src="https://img.shields.io/badge/Swagger-Doc-green?style=for-the-badge&logo=swagger">
 
